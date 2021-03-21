@@ -27,34 +27,50 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      <div>
+        <v-tooltip v-if="!$vuetify.theme.dark" bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on" color="info" small fab @click="darkMode">
+              <v-icon class="mr-1">mdi-moon-waxing-crescent</v-icon>
+            </v-btn>
+          </template>
+          <span>Dark Mode On</span>
+        </v-tooltip>
+
+        <v-tooltip v-else bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on" color="info" small fab @click="darkMode">
+              <v-icon color="yellow">mdi-white-balance-sunny</v-icon>
+            </v-btn>
+          </template>
+          <span>Dark Mode Off</span>
+        </v-tooltip>
+      </div>
+
     </v-app-bar>
 
     <v-main>
-      <HelloWorld/>
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    
   },
 
   data: () => ({
     //
   }),
+  methods: {
+    darkMode() {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+    }
+  }
 };
 </script>

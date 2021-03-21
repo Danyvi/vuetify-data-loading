@@ -1,18 +1,47 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+
+      <v-btn @click="getData">Load Data</v-btn>
+      <the-table :users="users"></the-table>
+      <!-- <the-table></the-table> -->
+  </v-app>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import axios from 'axios';
 
 export default {
-  name: 'Home',
   components: {
-    HelloWorld
-  }
+    'the-table': require('@/components/shared/Table.vue').default,
+  },
+  data() {
+    return {
+      users: null,
+      errors: [],
+    }
+  },
+  methods: {
+    getData() {
+      axios.get('http://jsonplaceholder.typicode.com/users')
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.users = response.data
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
+    },
+
+  },
+  // mounted() {
+  //   axios.get('http://jsonplaceholder.typicode.com/users')
+  //       .then(response => {
+  //         // JSON responses are automatically parsed.
+  //         this.users = response.data
+  //       })
+  //       .catch(e => {
+  //         this.errors.push(e)
+  //       })
+  // }
 }
 </script>
