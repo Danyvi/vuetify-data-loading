@@ -9,7 +9,14 @@
         <td>{{ props.item.name }}</td>
         <td>{{ props.item.username }}</td>
         <td>{{ props.item.email }}</td>
-        <td>{{ props.item.website }}</td>
+        <td>
+          <a 
+            :href="'https://www.'+ props.item.website" 
+            target="_blank"
+          > 
+            {{ props.item.website }} 
+          </a>
+        </td>
         <td>{{ props.item.city }}</td>
         <td>{{ props.item.lat }}</td>
         <td>{{ props.item.lng }}</td>
@@ -28,8 +35,8 @@ export default {
       // users: [],
       headers: [
         { text: 'ID', value: 'id' },
-        { text: 'name', value: 'name' },
-        { text: 'Nsername', value: 'username' },
+        { text: 'Name', value: 'name' },
+        { text: 'Username', value: 'username' },
         { text: 'email', value: 'email' },
         { text: 'Website', value: 'website' },
         { text: 'City', value: 'address.city' },

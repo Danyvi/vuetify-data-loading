@@ -1,47 +1,46 @@
 <template>
-  <v-app>
-
-      <v-btn @click="getData">Load Data</v-btn>
-      <the-table :users="users"></the-table>
-      <!-- <the-table></the-table> -->
-  </v-app>
+  <v-expansion-panels>
+    <v-expansion-panel
+      v-for="panel in panels"
+      :key="panel.pid"
+    >
+      <v-expansion-panel-header>
+        {{ panel.label }}
+      </v-expansion-panel-header>
+      <v-expansion-panel-content>
+        <component :is="panel.component"></component>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+  </v-expansion-panels>
 </template>
 
 <script>
-import axios from 'axios';
-
+  import UsersTable from '@/components/users/UsersTable.vue';
+  import UserFields from '@/components/users/UserFields.vue';
 export default {
+  
   components: {
-    'the-table': require('@/components/shared/Table.vue').default,
+    // 'UsersTable': require('@/components/users/UsersTable.vue').default,
+    // 'UserFields': require('@/components/users/UserFields.vue').default,
+    UsersTable,
+    UserFields
   },
   data() {
     return {
-      users: null,
-      errors: [],
-    }
-  },
-  methods: {
-    getData() {
-      axios.get('http://jsonplaceholder.typicode.com/users')
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.users = response.data
-        })
-        .catch(e => {
-          this.errors.push(e)
-        })
-    },
+      panels: [
+        {
+          pid: 0,
+          label: 'Users\' Table',
+          component: UsersTable
+        },
+        {
+          pid: 1,
+          label: 'User Fields',
+          component: UserFields
+        },
 
-  },
-  // mounted() {
-  //   axios.get('http://jsonplaceholder.typicode.com/users')
-  //       .then(response => {
-  //         // JSON responses are automatically parsed.
-  //         this.users = response.data
-  //       })
-  //       .catch(e => {
-  //         this.errors.push(e)
-  //       })
-  // }
+      ]
+    }
+  }
 }
 </script>
